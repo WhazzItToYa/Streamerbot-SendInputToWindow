@@ -6,7 +6,7 @@ This extension [Streamer.bot](https://streamer.bot) is an action which lets you 
 
 ## Installation
 
-1. Import SendInputToWindow.sb into Streamer.bot
+1. Import [SendInputToWindow.sb](https://raw.githubusercontent.com/WhazzItToYa/Streamerbot-SendInputToWindow/refs/heads/main/SendInputToWindow.sb) into Streamer.bot
 
 ## Usage
 
