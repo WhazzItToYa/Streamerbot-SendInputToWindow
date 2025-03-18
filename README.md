@@ -14,7 +14,7 @@ To identify which window to send the input to, one or more of the following argu
 * `targetWindowTitle`: The title of the window to send the keystrokes to. Can be a partial match.
 * `targetWindowClass`: The window class. If supplied, it must match exactly.
 * `targetProcess`: The name of the window's process. Can be a partial match.
-* `targetExecutable`: Either the executable's filename (e.g. `notepad.exe`), or the full path and filename (`c:\\windows\\system32\\notepad.exe`), but it must match exactly.
+* `targetExecutable`: Either the executable's filename (e.g. `notepad.exe`), or the full path and filename (`c:\windows\system32\notepad.exe`), but it must match exactly.
 
 To tell the action what keystrokes to send, set the argument:
 * `keypresses` (required): The sequence of keypresses to send to the target window. See [Keypress codes](#Keypress%20Codes)
@@ -23,6 +23,8 @@ To tell the action what keystrokes to send, set the argument:
 After those arguments are set, use the [Run Action subaction](https://docs.streamer.bot/api/sub-actions/core/actions/run-action) to run the action `Send Input To Window`.
 
 The extension contains an example action that sends the word "oil slick" followed by the Enter key, to the game "Typing of the Dead Overkill", run by the NOTD_NG.exe program.
+
+![example](assets/ExampleAction.png)
 
 ## Keypress Codes
 
