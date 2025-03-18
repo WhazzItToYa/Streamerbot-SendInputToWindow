@@ -1,8 +1,9 @@
-# Send Input to Window extension for Streamer.bot
+# Send Input to Window Extension for Streamer.bot
+<div align="center">
+<img src="assets/SendInputToWindowLogo.png" alt="Logo" width="20%" style="">
+</div>
 
-![extensionlogo](assets/SendInputToWindowLogo.png "Extension Logo")
-
-This extension [Streamer.bot](https://streamer.bot) is an action which lets you send keystrokes to an application window.  It differs from the built-in [Keyboard Press subaction](https://docs.streamer.bot/api/sub-actions/core/system/keyboard-press) by targeting a specific window, rather than whichever window currently has the system focus or is on top.
+This extension for [Streamer.bot](https://streamer.bot) is an action which lets you send keystrokes to an application window.  It differs from the built-in [Keyboard Press subaction](https://docs.streamer.bot/api/sub-actions/core/system/keyboard-press) by targeting a specific window, rather than whichever window currently has the system focus or is on top.
 
 ## Installation
 
