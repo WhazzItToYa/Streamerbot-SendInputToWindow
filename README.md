@@ -126,6 +126,5 @@ There are utilities like [AutoHotKey](https://www.autohotkey.com/)'s Window Spy 
 
 * For feature requests or bug reports: https://github.com/WhazzItToYa/Streamerbot-SendInputToWindow/issues 
 * Or submit a pull request
-* Or if you can't do either of those things, ping me through the Streamer.bot Discord in the [Send Input To Window post](https://discord.com/channels/834650675224248362/___)
-
+* Or if you can't do either of those things, ping me through the Streamer.bot Discord in the [Send Keyboard Presses to Window post](https://discord.com/channels/834650675224248362/1351424830469050440)
 
