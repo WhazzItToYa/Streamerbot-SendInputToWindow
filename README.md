@@ -21,6 +21,10 @@ To tell the action what keystrokes to send, set the argument:
 * `keypresses` (required): The sequence of keypresses to send to the target window. See [Keypress codes](#Keypress%20Codes)
   * example: `hello world{enter}`
 
+To set delays:
+* `keypressDelay` : the number of milliseconds to wait between keypresses. Optional, defaulting to 0 (no delay).
+* `keypressHold` : the number of milliseconds to hold each key down. Optional, defaulting to 0 (no delay).
+
 After those arguments are set, use the [Run Action subaction](https://docs.streamer.bot/api/sub-actions/core/actions/run-action) to run the action `Send Input To Window`.
 
 The extension contains an example action that sends the word "oil slick" followed by the Enter key, to the game "Typing of the Dead Overkill", run by the NOTD_NG.exe program.

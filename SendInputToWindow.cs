@@ -215,12 +215,17 @@ public class CPHInline
             return false;
         }
 
+        CPH.TryGetArg("keypressDelay", out int keypressDelay);
+        CPH.TryGetArg("keypressHold", out int keypressHold);
+        
         IntPtr hwnd = MatchWindow();
         IntPtr[] keyCodes = GenerateKeycodes(keypresses);
         foreach (IntPtr keyCode in keyCodes)
         {
             SendMessage(hwnd, WM_KEYDOWN, keyCode, IntPtr.Zero);
+            if (keypressHold > 0) CPH.Wait(keypressHold);
             SendMessage(hwnd, WM_KEYUP, keyCode, IntPtr.Zero);
+            if (keypressDelay > 0) CPH.Wait(keypressDelay);
         }
 
         return true;
