@@ -245,16 +245,34 @@ public class CPHInline
         MatchCollection matches = Regex.Matches(upkeys, "[^{]|{[^}]*}", RegexOptions.None);
 
         // Decode each parsed element into actions
+        bool needsDelay = false;
         List<Action> actions = new List<Action>();
         foreach (Match match in matches)
         {
-            int hold = keypressHold;
-            
             // Strip off any surrounding {} and use the contents as the name of the key to be looked up.
             string keyname = match.Value.TrimStart('{').TrimEnd('}');
 
+            int pos = keyname.IndexOf(':', 0);
+
+            // {:NUMBER} means to pause for NUMBER ms instead of default delay
+            if (pos == 0 && keyname.Length > 1) {
+                int.TryParse(keyname.Substring(pos+1), out int delay);
+                DEBUG($"Explicit pause for {delay}ms");
+                actions.Add( () => {CPH.Wait(delay);} );
+                needsDelay = false;
+                continue;
+            }
+
+            // If the immediately prior action wasn't an inter-key delay, then add the default.
+            if (needsDelay && keypressDelay > 0)
+            {
+                DEBUG($"Default pause for {keypressDelay}ms");
+                actions.Add(() => {CPH.Wait(keypressDelay);});
+            }
+            
+            int hold = keypressHold;
+            
             // {KEY:NUMBER} means to hold the key down for NUMBER ms.
-            int pos = keyname.IndexOf(':', 1);
             if (pos > 0)
             {
                 int.TryParse(keyname.Substring(pos+1), out hold);
@@ -263,6 +281,8 @@ public class CPHInline
             
             if (VirtualKeyCodes.TryGetValue(keyname, out int keycode))
             {
+                DEBUG($"Keypress {keyname} for {hold}ms");
+                
                 // Key down
                 actions.Add(() => {SendMessage(hwnd, WM_KEYDOWN, (IntPtr)keycode, IntPtr.Zero);});
 
@@ -272,8 +292,7 @@ public class CPHInline
                 // Key up
                 actions.Add(() => {SendMessage(hwnd, WM_KEYUP, (IntPtr)keycode, IntPtr.Zero);});
                 
-                // Optional between-key pause
-                if (keypressDelay > 0) actions.Add(() => {CPH.Wait(keypressDelay);});
+                needsDelay = true;
             }
             else
             {

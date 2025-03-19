@@ -33,15 +33,21 @@ The extension contains an example action that sends the word "oil slick" followe
 
 ## Keypress Codes
 
-`keypresses` can contain any of the following single-character codes:
+Each element of the `keypresses` argument can be one of:
+* A single character : will type that character's key (down and up).
+* `{KEYCODE}` : will type one of the named keys listed below. KEYCODE may also be one of the single characters, e.g. `{A}`
+* `{KEYCODE:DELAY}` : will type one of the named keys listed below, holding it down for DELAY milliseconds.
+* `{:DELAY}` : inserts a pause for DELAY milliseconds.
+
+### Single Characters
+The following single-character keys are recognized:
 * " " (space)
 * 0-9, A-Z
 * \; \: \+ \= \, \< \- \_ \. \> \/ \? \~ \` \[ \\ \| \] \' \"
-
 Note that some characters are just the shifted versions of a key's base character ("=" and "+").  They are included for convenience, but they send the same keycode to the app as the unshifted character.
 
-The following keys can be specified by wrapping them inside `{...}`, such as `{DOWN}`:
-
+### Key Names
+The named keys, which you must put inside `{...}` are:
 * LBUTTON:  Left mouse button
 * RBUTTON:  Right mouse button
 * MBUTTON:  Middle mouse button
@@ -114,6 +120,10 @@ The following keys can be specified by wrapping them inside `{...}`, such as `{D
 
 Some apps are not compatible with the generic technique that this extension uses to send input (SendMessage).
 
+### Anitcheat
+
+Games with Anitcheat may block this from working on them, or even flag it as cheating behavior.  You've been warned.
+
 ### Using `target*` Arguments.
 
 Try to choose the longest portion of the window title that is guaranteed to be in the title at all times, and doesn't appear in any other windows.
@@ -124,7 +134,9 @@ If that still doesn't uniquely identify the correct window, you may need to add 
 
 A window's "class" is a hidden property of the window, and the title might not be visible if it is a fullscreen or borderless window. So how do you figure them out?
 
-There are utilities like [AutoHotKey](https://www.autohotkey.com/)'s Window Spy that will show you the title, class, process and executable of a window.  Other utilites include Spy++, Window Inspector, or WinSpy++.
+When you Alt-Tab, the window's title is displayed on the thumbnails.
+
+For more window information, there are utilities like [AutoHotKey](https://www.autohotkey.com/)'s Window Spy that will show you the title, class, process and executable of a window.  Other utilites include Spy++, Window Inspector, or WinSpy++.
 
 ## Contact
 
