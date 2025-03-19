@@ -27,9 +27,14 @@ To set delays:
 
 After those arguments are set, use the [Run Action subaction](https://docs.streamer.bot/api/sub-actions/core/actions/run-action) to run the action `Send Input To Window`.
 
+### Example
 The extension contains an example action that sends the word "oil slick" followed by the Enter key, to the game "Typing of the Dead Overkill", run by the NOTD_NG.exe program.
 
 ![example](assets/ExampleAction.png)
+
+### Delay and Hold down Example
+
+A `keypresses` of "`{UP:1000}{:500}{LEFT:50}{DOWN:2000}`" will hold the up arrrow for 1 second, pause for 1/2 second, hold the down arrow for 50 milliseconds, and then down for 2 seconds.
 
 ## Keypress Codes
 
