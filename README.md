@@ -40,8 +40,8 @@ A `keypresses` of "`{UP:1000}{:500}{LEFT:50}{DOWN:2000}`" will hold the up arrro
 
 Each element of the `keypresses` argument can be one of:
 * A single character : will type that character's key (down and up).
-* `{KEYCODE}` : will type one of the named keys listed below. KEYCODE may also be one of the single characters, e.g. `{A}`
-* `{KEYCODE:DELAY}` : will type one of the named keys listed below, holding it down for DELAY milliseconds.
+* `{KEYNAME}` : will type one of the named keys listed below. KEYNAME may also be one of the single characters, e.g. `{A}`
+* `{KEYNAME:DELAY}` : will type one of the named keys listed below, holding it down for DELAY milliseconds.
 * `{:DELAY}` : inserts a pause for DELAY milliseconds.
 
 ### Single Characters
