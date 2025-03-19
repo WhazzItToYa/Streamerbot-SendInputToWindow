@@ -219,44 +219,55 @@ public class CPHInline
         CPH.TryGetArg("keypressHold", out int keypressHold);
         
         IntPtr hwnd = MatchWindow();
-        IntPtr[] keyCodes = GenerateKeycodes(keypresses);
-        foreach (IntPtr keyCode in keyCodes)
+        List<Action> actions = GenerateKeyActions(keypresses, hwnd, keypressDelay, keypressHold);
+        foreach (Action action in actions)
         {
-            SendMessage(hwnd, WM_KEYDOWN, keyCode, IntPtr.Zero);
-            if (keypressHold > 0) CPH.Wait(keypressHold);
-            SendMessage(hwnd, WM_KEYUP, keyCode, IntPtr.Zero);
-            if (keypressDelay > 0) CPH.Wait(keypressDelay);
+            action();
         }
 
         return true;
     }
 
     // Converts a string containing a sequence of KEYNAME,
-    // and converts it to an array of corresponding keycodes.
+    // and converts it to an array of functions to call in sequence to
+    // execute the keypresses and other actions.
+    //
     // Each KEYNAME is a case-insensitive name of a key, and can either be:
     //   * a single character denoting a regular key, e.g., "a" or "1"
     //   * OR  "{NAME}", where NAME is one of the named keys listed in the table above.
 
-    private IntPtr[] GenerateKeycodes(string keypresses)
+    private List<Action> GenerateKeyActions(string keypresses, IntPtr hwnd, int keypressDelay=0, int keypressHold=0)
     {
         string upkeys = keypresses.ToUpper();
+
+        // Extract all of the individual key characters and {...} directives.
         MatchCollection matches = Regex.Matches(upkeys, "[^{]|{[^}]*}", RegexOptions.None);
 
-        List<IntPtr> keycodes = new List<IntPtr>();
+        List<Action> actions = new List<Action>();
         foreach (Match match in matches)
         {
             string keyname = match.Value.TrimStart('{').TrimEnd('}');
 
             if (VirtualKeyCodes.TryGetValue(keyname, out int keycode))
             {
-                keycodes.Add((IntPtr)keycode);
+                // Key down
+                actions.Add(() => {SendMessage(hwnd, WM_KEYDOWN, (IntPtr)keycode, IntPtr.Zero);});
+
+                // Optional key down hold time
+                if (keypressHold > 0) actions.Add(() => {CPH.Wait(keypressHold);});
+
+                // Key up
+                actions.Add(() => {SendMessage(hwnd, WM_KEYUP, (IntPtr)keycode, IntPtr.Zero);});
+                
+                // Optional between-key pause
+                if (keypressDelay > 0) actions.Add(() => {CPH.Wait(keypressDelay);});
             }
             else
             {
                 WARN($"\"{match.Value}\" is not a valid virtual key name.");
             }
         }
-        return keycodes.ToArray();
+        return actions;
     }
 
     // Finds a window matching various window & process criteria
