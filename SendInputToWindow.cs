@@ -234,7 +234,8 @@ public class CPHInline
     //
     // Each KEYNAME is a case-insensitive name of a key, and can either be:
     //   * a single character denoting a regular key, e.g., "a" or "1"
-    //   * OR  "{NAME}", where NAME is one of the named keys listed in the table above.
+    //   * OR  "{NAME[:HOLD]}", where NAME is one of the named keys listed in the table above,
+    //           and HOLD is an optional number of milliseconds to hold the key down.
 
     private List<Action> GenerateKeyActions(string keypresses, IntPtr hwnd, int keypressDelay=0, int keypressHold=0)
     {
@@ -243,18 +244,30 @@ public class CPHInline
         // Extract all of the individual key characters and {...} directives.
         MatchCollection matches = Regex.Matches(upkeys, "[^{]|{[^}]*}", RegexOptions.None);
 
+        // Decode each parsed element into actions
         List<Action> actions = new List<Action>();
         foreach (Match match in matches)
         {
+            int hold = keypressHold;
+            
+            // Strip off any surrounding {} and use the contents as the name of the key to be looked up.
             string keyname = match.Value.TrimStart('{').TrimEnd('}');
 
+            // {KEY:NUMBER} means to hold the key down for NUMBER ms.
+            int pos = keyname.IndexOf(':', 1);
+            if (pos > 0)
+            {
+                int.TryParse(keyname.Substring(pos+1), out hold);
+                keyname = keyname.Substring(0, pos);
+            }
+            
             if (VirtualKeyCodes.TryGetValue(keyname, out int keycode))
             {
                 // Key down
                 actions.Add(() => {SendMessage(hwnd, WM_KEYDOWN, (IntPtr)keycode, IntPtr.Zero);});
 
                 // Optional key down hold time
-                if (keypressHold > 0) actions.Add(() => {CPH.Wait(keypressHold);});
+                if (keypressHold > 0) actions.Add(() => {CPH.Wait(hold);});
 
                 // Key up
                 actions.Add(() => {SendMessage(hwnd, WM_KEYUP, (IntPtr)keycode, IntPtr.Zero);});
