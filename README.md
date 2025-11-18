@@ -123,7 +123,7 @@ The named keys, which you must put inside `{...}` are:
 
 ### Doesn't Work With All Apps
 
-Some apps are not compatible with the generic technique that this extension uses to send input (SendMessage).
+Some apps are not compatible with the generic technique that this extension uses to send input (SendMessage). You can check the [compatibility issue](https://github.com/WhazzItToYa/Streamerbot-SendInputToWindow/issues/6) to see what apps are known to work or not work. If you try out a new app with this, feel free to add to that issue with the results.
 
 ### Anitcheat
 
@@ -148,4 +148,5 @@ For more window information, there are utilities like [AutoHotKey](https://www.a
 * For feature requests or bug reports: https://github.com/WhazzItToYa/Streamerbot-SendInputToWindow/issues 
 * Or submit a pull request
 * Or if you can't do either of those things, ping me through the Streamer.bot Discord in the [Send Keyboard Presses to Window post](https://discord.com/channels/834650675224248362/1351424830469050440)
+
 
